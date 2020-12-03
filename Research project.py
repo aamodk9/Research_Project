@@ -28,21 +28,37 @@ for i, x in enumerate(images):
     plt.axis('off')
     plt.imshow(img)
     
+'''
+from skimage.io import imread
+import numpy as np
+
+tiff_file = imread(path_to_tiff)
+print(tiff_file.shape)
+# assuming tiff_file has shape (number_of_images, height, width, 3)
+
+fig, ax = plt.subplots(rows, 3)
+i=0
+for idx, a in enumerate(ax.flatten()):
+    a.imshow(np.squeeze(tiff_file[idx,:,:,i]
+    i = 0 if i==2 else i+1 # to print all channels (greyscale, nuclei stain 1 and nuclei stain 2) separatly
+plt.show()
+# this is just for reference to better explain what I mean - code might be buggy and not run
+'''
 
 #Conversion for csv1
-csv1['Slice n°']=csv1['Slice n°'].div(3)
+csv1['Slice n°']=csv1['Slice n°'].div(3) # use new name
 csv1['Slice n°'] = csv1['Slice n°'].astype(int)
 display(csv1.dtypes) 
 csv1.head()
 
 #Conversion for csv2
-csv2['Slice n°']=csv2['Slice n°'].div(3)
+csv2['Slice n°']=csv2['Slice n°'].div(3) # use new name
 csv2['Slice n°'] = csv2['Slice n°'].astype(int)
 display(csv2.dtypes) 
 csv2.head()
 
 #conversion for csv3
-csv3['Slice n°']=csv3['Slice n°'].div(3)
+csv3['Slice n°']=csv3['Slice n°'].div(3) # use new name
 csv3['Slice n°'] = csv3['Slice n°'].astype(int)
 display(csv3.dtypes) 
 csv3.head()
