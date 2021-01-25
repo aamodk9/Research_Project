@@ -8,7 +8,6 @@ from PIL import Image
 import glob
 from matplotlib import pyplot as plt
 import pandas as pd
-#import cv2
 import numpy as np
 
 file_names = []
@@ -40,27 +39,28 @@ for i in range(len(files)):
 #Plotting the images with seperating channels
 #image1 = [cv2.imread(file) for file in glob.glob(r'D:\\Study\\Sem-3\\Research project\\Images\\**\*.tif', recursive=True)]
 
-image = glob.glob(r'D:\Study\Sem-3\Research project\Images1\*.tif', recursive=True)
+image = glob.glob(r'D:\Study\Sem-3\Research project\Images1\A01_001.tif', recursive=True)
 
 #Plotting the images with seperating channels
 
-
+#axs.ravel flattens the 2d array
+#axs.shape[0]*axs.shape[1] gives no. of rows and columns
 for photo, z in zip(image, range(10)):
-    figure, axs = plt.subplots(ncols=3, nrows=1)
-    for i, subplot in zip(range(3), axs):
+    figure, axs = plt.subplots(ncols=3, nrows=6)    
+    axs[0,0].set_title('Nuclei Marker')
+    axs[0,1].set_title('Nuclei Marker')
+    axs[0,2].set_title('Microscope image')
+    for i, subplot in zip(range(axs.shape[0]*axs.shape[1]), axs.ravel()):
         img1=np.array(Image.open(photo))
         temp = np.zeros(img1.shape, dtype='uint8')
-        temp[:,:,i] = img1[:,:,i]
+        temp[:,:,i%3] = img1[:,:,i%3]
         subplot.imshow(temp)
-        subplot.set_axis_off()
-        axs[0].set_title('Nuclei Marker')
-        axs[1].set_title('Nuclei Marker')
-        axs[2].set_title('Microscope image')        
+        subplot.set_axis_off()        
         for index, row in A02tracks.iterrows():
             #print(row['X'], row['Y'])
-            if (row['Track n°']==A02tracks['Track n°'].unique()[z]):
+            if (row['Track n°']==A02tracks['Track n°'].unique()[int(i/3)]):
              subplot.scatter(row['X'], row['Y'], c='w', s=1)
-           
+plt.savefig('D:/Study/Sem-3/Research project/sample1.png', dpi=300)         
 plt.show()
 
 
@@ -77,8 +77,6 @@ ax.set_zlabel('Channel 3')
   
 
  
-A02tracks.loc[A02tracks['Track n°'] == 1]
 
-A02tracks.iloc[:,18]
 
-print(A02tracks['Track n°'].unique()[1])
+
