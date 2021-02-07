@@ -98,7 +98,22 @@ ax.set_xlabel('Channel 1')
 ax.set_ylabel('Channel 2')
 ax.set_zlabel('Channel 3')
 
-  
+'''Single image at timestep 1 showing all the cells positions. (White dots on black background)'''
+
+figure, axs = plt.subplots(ncols=1, nrows=1)    
+axs.set_title('Nuclei Marker')
+img1=np.array(Image.open(image[0]))
+temp = np.zeros(img1.shape, dtype='uint8')
+axs.imshow(temp)
+axs.set_axis_off()
+for index, row in Book_A01.iterrows():
+ if (row['Slice n°']%3 == 1):
+  axs.scatter(row['X'], row['Y'],s=0.8, c='w',alpha=0.9)           
+plt.savefig('D:/Study/Sem-3/Research project/sample17.png', dpi=1200)  
+plt.show()
+
+
+
 
  
 
