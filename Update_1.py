@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Dec 10 17:19:45 2020
 
 @author: AAMOD
 """
@@ -43,14 +42,29 @@ image = glob.glob(r'D:\Study\Sem-3\Research project\Images\**\*.tif', recursive=
 
 #Plotting the images with seperating channels
 for photo in image:
-    figure, plots = plt.subplots(ncols=3, nrows=1)
-    for i, subplot in zip(range(3), plots):
+    figure, axs = plt.subplots(ncols=3, nrows=1)
+    for i, subplot in zip(range(3), axs):
         img1=np.array(Image.open(photo))
         temp = np.zeros(img1.shape, dtype='uint8')
         temp[:,:,i] = img1[:,:,i]
         subplot.imshow(temp)
         subplot.set_axis_off()
+        axs[0].set_title('Nuclei Marker')
+        axs[1].set_title('Nuclei Marker')
+        axs[2].set_title('Microsocpe image')
 plt.show()
 
+#Scatterplot
+ax = plt.axes(projection ="3d")
+i=0
+for img in img1:
+ ax.scatter(img.flat[i], img1.flat[i+1], img1.flat[i+2], c='r', marker='o')
+ i+= 1
+ax.set_xlabel('Channel 1')
+ax.set_ylabel('Channel 2')
+ax.set_zlabel('Channel 3')
 
+
+
+ 
     
