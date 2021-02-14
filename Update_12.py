@@ -99,7 +99,9 @@ axs.imshow(temp)
 axs.set_axis_off()
 for index, row in A01Sample.iterrows():
  if (row['Slice n°'] == 1):
-  axs.scatter(row['X'], row['Y'],s=0.8, c='w',alpha=0.9)           
+  color = ['green' if row['X'] < row['Y'] else 'red']
+  #print('cold value' + str(col))
+  axs.scatter(row['X'], row['Y'], s=1, c=color ,alpha=0.9)           
 plt.savefig('D:/Study/Sem-3/Research project/sample18.png', dpi=1200)  
 plt.show()
 
