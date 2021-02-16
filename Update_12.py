@@ -91,6 +91,7 @@ plt.show()
 
 '''Single image at timestep 1 showing all the cells positions. (White dots on black background)'''
 
+'''Checking whether pixels (x,y) are brighter on the channel of nuclei marker 1 or 2'''
 figure, axs = plt.subplots(ncols=1, nrows=1)    
 axs.set_title('Nuclei Marker')
 img1=np.array(Image.open(image[0]))
