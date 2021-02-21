@@ -9,6 +9,9 @@ import glob
 from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
+import imageio
+from images2gif import writeGif
+
 
 file_names = []
 file_names.append('D:/Study/Sem-3/Research project/files/csv-2/A01Sample.csv')
@@ -91,19 +94,22 @@ plt.show()
 
 '''Single image at timestep 1 showing all the cells positions. (White dots on black background)'''
 
-'''Checking whether pixels (x,y) are brighter on the channel of nuclei marker 1 or 2'''
+'''Animation going forward in time, Looping over frame number (GIF)'''
 figure, axs = plt.subplots(ncols=1, nrows=1)    
 axs.set_title('Nuclei Marker')
 img1=np.array(Image.open(image[0]))
 temp = np.zeros(img1.shape, dtype='uint8')
 axs.imshow(temp)
-axs.set_axis_off()
+axs.set_axis_off() 
+image_list = []
 for index, row in A01Sample.iterrows():
  if (row['Slice n°'] == 1):
   color = ['green' if row['X'] < row['Y'] else 'red']
-  #print('cold value' + str(col))
-  axs.scatter(row['X'], row['Y'], s=1, c=color ,alpha=0.9)           
-plt.savefig('D:/Study/Sem-3/Research project/sample18.png', dpi=1200)  
+  sbplt = axs.scatter(row['X'], row['Y'], s=3, c=color ,alpha=1) 
+  figName = 'D:/Study/Sem-3/Research project/sample' + str(row['X'])+'.jpeg'
+  sbplt.figure.savefig(figName, dpi=1000)
+  image_list.append(imageio.imread(figName))     
+imageio.mimsave('Images.gif',image_list)
 plt.show()
 
 
