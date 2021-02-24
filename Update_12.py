@@ -101,15 +101,15 @@ img1=np.array(Image.open(image[0]))
 temp = np.zeros(img1.shape, dtype='uint8')
 axs.imshow(temp)
 axs.set_axis_off() 
-image_list = []
+image_list = [] 
 for index, row in A01Sample.iterrows():
- if (row['Slice n°'] == 1):
+ if (row['Frame_no'] == 1):
   color = ['green' if row['X'] < row['Y'] else 'red']
   sbplt = axs.scatter(row['X'], row['Y'], s=3, c=color ,alpha=1) 
   figName = 'D:/Study/Sem-3/Research project/sample' + str(row['X'])+'.jpeg'
-  sbplt.figure.savefig(figName, dpi=1000)
+  sbplt.figure.savefig(figName, dpi=600)
   image_list.append(imageio.imread(figName))     
-imageio.mimsave('Images.gif',image_list)
+imageio.mimsave('D:\Study\Research_Project\Images1.gif',image_list)
 plt.show()
 
 
