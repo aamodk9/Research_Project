@@ -11,6 +11,8 @@ import pandas as pd
 import numpy as np
 import imageio
 from images2gif import writeGif
+from PIL import Image
+import itertools
 
 
 file_names = []
@@ -44,6 +46,8 @@ for i in range(len(files)):
 #image1 = [cv2.imread(file) for file in glob.glob(r'D:\\Study\\Sem-3\\Research project\\Images\\**\*.tif', recursive=True)]
 
 image = glob.glob(r'D:\Study\Sem-3\Research project\Images1\A01_001.tif', recursive=True)
+
+
 
 #Plotting the images with seperating channels
 
@@ -102,7 +106,7 @@ temp = np.zeros(img1.shape, dtype='uint8')
 axs.imshow(temp)
 axs.set_axis_off() 
 image_list = [] 
-for index, row in A01Sample.iterrows():
+for index, row in A02tracks.iterrows():
  if (row['Frame_no'] == 1):
   color = ['green' if row['X'] < row['Y'] else 'red']
   sbplt = axs.scatter(row['X'], row['Y'], s=3, c=color ,alpha=1) 
@@ -111,6 +115,31 @@ for index, row in A01Sample.iterrows():
   image_list.append(imageio.imread(figName))     
 imageio.mimsave('D:\Study\Research_Project\Images1.gif',image_list)
 plt.show()
+
+
+'''Animation going forward in time, Looping over chanel and frame number (GIF) (update)'''
+im = Image.open(r'D:\Study\Sem-3\Research project\Images1\A01_001.tif')
+pix = im.load()
+figure, axs = plt.subplots(ncols=1, nrows=1)    
+axs.set_title('Nuclei Marker')
+img1=np.array(Image.open(image[0]))
+temp = np.zeros(img1.shape, dtype='uint8')
+axs.imshow(temp)
+axs.set_axis_off() 
+frame_no = 1
+Max_frame_no = 90
+for index, row in A02tracks.iterrows():
+ if (row['Frame_no'] == frame_no and row['Frame_no']<= Max_frame_no ):
+  pixel= pix[row['X'], row['Y']]
+  color = ['green' if pixel[0] < pixel[1] else 'red']
+  sbplt = axs.scatter(row['X'], row['Y'], s=2, c=color ,alpha=0.9) 
+  figName = 'D:/Study/Sem-3/Research project/samp' + str(row['X'])+'.jpeg'
+  sbplt.figure.savefig(figName, dpi=200)
+  image_list.append(imageio.imread(figName))     
+imageio.mimsave('D:\Study\Research_Project\Images4.gif',image_list)
+plt.show()
+
+
 
 
 
