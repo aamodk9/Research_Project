@@ -96,8 +96,6 @@ plt.savefig('D:/Study/Sem-3/Research project/sample7.png', dpi=1200)
 plt.show()
 
 
-'''Single image at timestep 1 showing all the cells positions. (White dots on black background)'''
-
 '''Animation going forward in time, Looping over frame number (GIF)'''
 figure, axs = plt.subplots(ncols=1, nrows=1)    
 axs.set_title('Nuclei Marker')
