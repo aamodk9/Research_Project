@@ -116,8 +116,6 @@ plt.show()
 
 
 '''Animation going forward in time, Looping over chanel and frame number (GIF) (update)'''
-im = Image.open(r'D:\Study\Sem-3\Research project\Images1\A01_001.tif')  # open /tracking/4D-TIFFs/A01-Composite.tif # shape (200, 664, 524, 3)
-pix = im.load()
 figure, axs = plt.subplots(ncols=1, nrows=1)    
 axs.set_title('Nuclei Marker')
 img1=np.array(Image.open(image[0]))
@@ -128,7 +126,9 @@ frame_no = 1
 Max_frame_no = 90 # 600 Slides = 200 Frames with 3 channels
 for index, row in A02tracks.iterrows(): # iter over /tracking/tracks/A01-2020-06-Britnie/A01Sample-1.csv
  #if (row['Frame_no'] == frame_no and row['Frame_no']<= Max_frame_no ): # not needed
-  pixel= pix[row['Frame_no'], row['X'], row['Y']]
+  im = Image.open(f'D:\Study\Sem-3\Research project\Images1\A01_{n:03}.tif')  # open tracking/A01/images/  # shape (664, 524, 3)
+  pix = im.load()
+  pixel= pix[row['X'], row['Y']]
   color = ['green' if pixel[0] < pixel[1] else 'red']
   sbplt = axs.scatter(row['X'], row['Y'], s=2, c=color ,alpha=0.9) 
   figName = 'D:/Study/Sem-3/Research project/samp' + str(row['X'])+'.jpeg'
