@@ -50,32 +50,34 @@ for i in range(len(files)):
 image = glob.glob(r'D:\Study\Sem-3\Research project/Images/A01_001.tif', recursive=True)
 
 
+
+
 '''Animation going forward in time, Looping over chanel and frame number (GIF) (update)'''
-
-'''collecting the pixels in im variable seperately to avoid adding another loop it will increase code complexity'''
-
-for n in range (1,201):
-    im= Image.open(f'D:/Study/Sem-3/Research project/Images/A01_{n:03}.tif')
 figure, axs = plt.subplots(ncols=1, nrows=1)    
 axs.set_title('Nuclei Marker')
 img1=np.array(Image.open(image[0]))
 temp = np.zeros(img1.shape, dtype='uint8')
-axs.imshow(temp)
-axs.set_axis_off() 
 image_list = [] 
-frame_no = 1 
 max_frame_no = np.amax(A01Sample['Frame_no'].to_numpy())
 iter_till_frame_no = 90 # 600 Slides = 200 Frames with 3 channels
 iter_till_frame_no = iter_till_frame_no if iter_till_frame_no <= max_frame_no else max_frame_no
 for frame_no in range(iter_till_frame_no):
+   im = Image.open(f'D:/Study/Sem-3/Research project/Images/A01_{(frame_no+1):03}.tif')
+   pix = im.load()
    sub_df = A01Sample[A01Sample['Frame_no']==frame_no]
+   figure, axs = plt.subplots(ncols=1, nrows=1)    
+   axs.set_title('Nuclei Marker')
+   axs.imshow(temp)
+   axs.set_axis_off() 
    for index, row in sub_df.iterrows():
-       pix = im.load()
        pixel= pix[row['X'], row['Y']]
        color = ['green' if pixel[0] < pixel[1] else 'red']
        sbplt = axs.scatter(row['X'], row['Y'], s=2, c=color ,alpha=0.9)
    figName = 'D:/Study/Sem-3/Research project/samp' + str(frame_no)+'.jpeg'
    sbplt.figure.savefig(figName, dpi=200)
    image_list.append(imageio.imread(figName))   
-imageio.mimsave('D:\Study\Research_Project\comp5.gif',image_list)
+imageio.mimsave('D:\Study\Research_Project\Animation_01.gif',image_list)
 plt.show()
+
+
+
